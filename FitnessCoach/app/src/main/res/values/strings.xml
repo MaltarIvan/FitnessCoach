@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">FitnessCoach</string>
+
+    <string-array name="exercise_type_category">
+        <item>Time</item>
+        <item>Repetition</item>
+    </string-array>
+
+    <string name="preference_file_key">hr.apps.maltar.fitnesscoach.PREFERENCE_FILE_KEY</string>
+</resources>

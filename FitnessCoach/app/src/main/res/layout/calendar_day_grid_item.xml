@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="hr.apps.maltar.fitnesscoach.activities.MainActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/calendar_day_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Datum: 21.6.1996."/>
+
+    <LinearLayout
+        android:id="@+id/calendar_day_item_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/calendar_day_item_1_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:id="@+id/calendar_day_item_1_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Naziv nečega: "/>
+
+        <TextView
+            android:id="@+id/calendar_day_item_1_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20:35"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/calendar_day_item_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/calendar_day_item_2_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:id="@+id/calendar_day_item_2_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Naziv nečega: "/>
+
+        <TextView
+            android:id="@+id/calendar_day_item_2_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20:35"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/calendar_day_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="..."/>
+</LinearLayout>
