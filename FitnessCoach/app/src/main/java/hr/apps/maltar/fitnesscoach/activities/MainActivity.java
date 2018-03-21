@@ -99,8 +99,10 @@ public class MainActivity extends AppCompatActivity {
             editor.putString(SharedPreferencesParams.FIRST_DATE_PREFERENCE, firstDate);
             editor.commit();
         } else {
+            // debug
+            // firstDate = "Tue Feb 10 23:24:32 GMT+01:00 2015";
             Toast.makeText(this, firstDate, Toast.LENGTH_SHORT).show();
-    }
+        }
 
         SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT'Z yyyy");
         Date date = null;
@@ -113,7 +115,8 @@ public class MainActivity extends AppCompatActivity {
 
         Date today = new Date();
         long diff = today.getTime() - date.getTime();
-        final long daysDiff = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+        long daysDiff = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + 1;
+        daysDiff = Math.min(Math.max(daysDiff, 1), 365);
         int count = (int) daysDiff + 100;
 
         // days = 5; // debug

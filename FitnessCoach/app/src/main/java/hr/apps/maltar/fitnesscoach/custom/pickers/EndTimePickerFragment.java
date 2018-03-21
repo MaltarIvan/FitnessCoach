@@ -1,4 +1,4 @@
-package hr.apps.maltar.fitnesscoach.pickers;
+package hr.apps.maltar.fitnesscoach.custom.pickers;
 
 import android.app.Dialog;
 import android.app.DialogFragment;

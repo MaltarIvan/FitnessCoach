@@ -5,11 +5,17 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import hr.apps.maltar.fitnesscoach.R;
-import hr.apps.maltar.fitnesscoach.pickers.EndTimePickerFragment;
-import hr.apps.maltar.fitnesscoach.pickers.StartTimePickerFragment;
+import hr.apps.maltar.fitnesscoach.custom.pickers.EndTimePickerFragment;
+import hr.apps.maltar.fitnesscoach.custom.pickers.StartTimePickerFragment;
+import hr.apps.maltar.fitnesscoach.database.entities.Exercise;
+import hr.apps.maltar.fitnesscoach.listAdapters.ExercisesAdapter;
 
 public class AddTrainingActivity extends AppCompatActivity {
     private Button setStartTimeButton;
@@ -18,6 +24,14 @@ public class AddTrainingActivity extends AppCompatActivity {
     private Button cancelButton;
     private TextView startTimeTextView;
     private TextView endTimeTextView;
+
+    private Button addExerciseButton;
+    private CheckBox isDoneCheckBox;
+    private ListView exercisesListView;
+
+    private ExercisesAdapter exercisesAdapter;
+
+    private boolean isDone = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,5 +78,27 @@ public class AddTrainingActivity extends AppCompatActivity {
 
         startTimeTextView = findViewById(R.id.add_training_start_time_text);
         endTimeTextView = findViewById(R.id.add_training_end_time_text);
+
+        addExerciseButton = findViewById(R.id.add_training_add_exercise_button);
+        addExerciseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addExercise();
+            }
+        });
+
+        isDoneCheckBox = findViewById(R.id.add_training_done_check_box);
+        isDoneCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isDone = isDoneCheckBox.isChecked();
+            }
+        });
+
+        exercisesListView = findViewById(R.id.add_training_exercise_list);
+        exercisesAdapter = new ExercisesAdapter(getApplicationContext(), new ArrayList<Exercise>());
+    }
+
+    private void addExercise() {
     }
 }

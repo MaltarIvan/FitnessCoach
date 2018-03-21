@@ -50,7 +50,6 @@
         android:horizontalSpacing="2dp"
         android:stretchMode="columnWidth"
         android:gravity="center">
-
     </GridView>
 
 </LinearLayout>

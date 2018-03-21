@@ -1,4 +1,4 @@
-package hr.apps.maltar.fitnesscoach.pickers;
+package hr.apps.maltar.fitnesscoach.custom.pickers;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -30,6 +30,6 @@ public class StartTimePickerFragment extends DialogFragment implements TimePicke
     @Override
     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
         TextView textView = getActivity().findViewById(R.id.add_training_start_time_text);
-        textView.setText(textView.getText().toString() + hourOfDay + ":" + minute);
+        textView.setText(textView.getText().toString() + String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
     }
 }
