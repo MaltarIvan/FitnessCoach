@@ -1,48 +1,38 @@
 package hr.apps.maltar.fitnesscoach.database.entities;
 
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
 
 import org.parceler.Parcel;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Created by Maltar on 16.3.2018..
  */
 @Parcel
-@DatabaseTable(tableName = "Exercises")
 public class Exercise {
-    private static final String TRAINING_ID_FIELD_NAME = "trainingId";
-
-    @DatabaseField(generatedId = true)
     private int id;
-
-    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true)
     private ExerciseType exerciseType;
-
-    @DatabaseField
     private int numberOfSeries;
-
-    @DatabaseField
     private int numberOfRepetitions;
-
-    @DatabaseField
     private double weight;
-
-    @DatabaseField
-    private String time;
-
-    @DatabaseField
+    private long time;
     private boolean done;
-
-    @DatabaseField
     private Date date;
-
-    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = TRAINING_ID_FIELD_NAME)
     private Training training;
 
     public Exercise() {
+    }
+
+    public Exercise(int id, ExerciseType exerciseType, int numberOfSeries, int numberOfRepetitions, double weight, long time, boolean done, Date date, Training training) {
+        this.id = id;
+        this.exerciseType = exerciseType;
+        this.numberOfSeries = numberOfSeries;
+        this.numberOfRepetitions = numberOfRepetitions;
+        this.weight = weight;
+        this.time = time;
+        this.done = done;
+        this.date = date;
+        this.training = training;
     }
 
     public int getId() {
@@ -85,11 +75,11 @@ public class Exercise {
         this.weight = weight;
     }
 
-    public String getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(long time) {
         this.time = time;
     }
 

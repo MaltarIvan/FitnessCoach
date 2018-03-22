@@ -163,7 +163,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (IntentFilterParams.LOAD_ALL_TRAININGS_ACTION.equals(intent.getAction())) {
-                ArrayList<Training> trainings = intent.getParcelableArrayListExtra(IntentExtrasParams.TRAINING_EXTRA);
+                ArrayList<Training> trainings = new ArrayList<>();
+                // trainings = intent.getParcelableExtra(IntentExtrasParams.TRAINING_EXTRA);
                 setCalendar(trainings);
             }
         }

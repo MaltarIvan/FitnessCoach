@@ -31,10 +31,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
-    // Dependency for OrmLite
-    compile 'com.j256.ormlite:ormlite-android:4.48'
-    compile 'com.j256.ormlite:ormlite-core:4.48'
-
     // parcelable
     compile 'org.parceler:parceler-api:1.1.6'
     annotationProcessor 'org.parceler:parceler:1.1.6'
