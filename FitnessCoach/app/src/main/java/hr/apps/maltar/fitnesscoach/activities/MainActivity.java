@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
@@ -26,6 +27,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import hr.apps.maltar.fitnesscoach.R;
+import hr.apps.maltar.fitnesscoach.database.entities.ExerciseType;
 import hr.apps.maltar.fitnesscoach.database.entities.Training;
 import hr.apps.maltar.fitnesscoach.entities.Day;
 import hr.apps.maltar.fitnesscoach.listAdapters.CalendarAdapter;
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter intentFilter = new IntentFilter();
 
         intentFilter.addAction(IntentFilterParams.LOAD_ALL_TRAININGS_ACTION);
+        intentFilter.addAction(IntentFilterParams.LOAD_ALL_EXERCISE_TYPES_ACTION);
 
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, intentFilter);
     }
@@ -164,8 +167,18 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             if (IntentFilterParams.LOAD_ALL_TRAININGS_ACTION.equals(intent.getAction())) {
                 ArrayList<Training> trainings = new ArrayList<>();
-                // trainings = intent.getParcelableExtra(IntentExtrasParams.TRAINING_EXTRA);
+                ArrayList<Parcelable> parcelables = intent.getParcelableArrayListExtra(IntentExtrasParams.TRAINING_EXTRA);
+                for (Parcelable parcelable : parcelables) {
+                    trainings.add((Training) Parcels.unwrap(parcelable));
+                }
                 setCalendar(trainings);
+            }
+            if (IntentFilterParams.LOAD_ALL_EXERCISE_TYPES_ACTION.equals(intent.getAction())) {
+                ArrayList<ExerciseType> exerciseTypes = new ArrayList<>();
+                ArrayList<Parcelable> parcelables = intent.getParcelableArrayListExtra(IntentExtrasParams.EXERCISE_TYPE_EXTRA);
+                for (Parcelable parcelable : parcelables) {
+                    exerciseTypes.add((ExerciseType) Parcels.unwrap(parcelable));
+                }
             }
         }
     }

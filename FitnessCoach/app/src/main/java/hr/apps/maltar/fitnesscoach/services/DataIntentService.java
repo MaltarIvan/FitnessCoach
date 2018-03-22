@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -186,7 +187,11 @@ public class DataIntentService extends IntentService {
             trainings.add(training);
         }
         Intent intent = new Intent(IntentFilterParams.LOAD_ALL_TRAININGS_ACTION);
-        intent.putExtra(IntentExtrasParams.TRAINING_EXTRA, trainings);
+        ArrayList<Parcelable> parcelables = new ArrayList<>();
+        for (Training training : trainings) {
+            parcelables.add(Parcels.wrap(training));
+        }
+        intent.putExtra(IntentExtrasParams.TRAINING_EXTRA, parcelables);
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
     }
 
@@ -218,7 +223,11 @@ public class DataIntentService extends IntentService {
         }
 
         Intent intent = new Intent(IntentFilterParams.LOAD_ALL_EXERCISE_TYPES_ACTION);
-        intent.putExtra(IntentExtrasParams.EXERCISE_TYPE_EXTRA, Parcels.wrap(exerciseTypes));
+        ArrayList<Parcelable> parcelables = new ArrayList<>();
+        for (ExerciseType exerciseType : exerciseTypes) {
+            parcelables.add(Parcels.wrap(exerciseType));
+        }
+        intent.putExtra(IntentExtrasParams.EXERCISE_TYPE_EXTRA, parcelables);
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
     }
 

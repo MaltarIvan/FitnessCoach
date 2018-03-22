@@ -23,7 +23,8 @@
 
         <activity android:name=".activities.AddExerciseTypeActivity" />
         <activity android:name=".activities.DayActivity" />
-        <activity android:name=".activities.AddTrainingActivity"></activity>
+        <activity android:name=".activities.AddTrainingActivity" />
+        <activity android:name=".activities.AddExerciseActivity"></activity>
     </application>
 
 </manifest>

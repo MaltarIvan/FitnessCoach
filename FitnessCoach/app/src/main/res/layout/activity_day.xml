@@ -26,4 +26,11 @@
             android:text="add training"/>
     </LinearLayout>
 
+    <ListView
+        android:id="@+id/day_training_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+
 </LinearLayout>

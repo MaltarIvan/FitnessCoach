@@ -1,6 +1,8 @@
 package hr.apps.maltar.fitnesscoach.activities;
 
+import android.app.Activity;
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,17 +11,20 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
-import java.util.Date;
 
 import hr.apps.maltar.fitnesscoach.R;
 import hr.apps.maltar.fitnesscoach.custom.pickers.EndTimePickerFragment;
 import hr.apps.maltar.fitnesscoach.custom.pickers.StartTimePickerFragment;
 import hr.apps.maltar.fitnesscoach.database.entities.Exercise;
-import hr.apps.maltar.fitnesscoach.database.entities.Training;
 import hr.apps.maltar.fitnesscoach.listAdapters.ExercisesAdapter;
+import hr.apps.maltar.fitnesscoach.params.IntentExtrasParams;
 
 public class AddTrainingActivity extends AppCompatActivity {
+    private static final int ADD_EXERCISE_REQUEST = 1;
+
     private Button setStartTimeButton;
     private Button setEndTimeButton;
     private Button saveTrainingButton;
@@ -44,6 +49,8 @@ public class AddTrainingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_training);
+
+        exercisesAdapter = new ExercisesAdapter(getApplicationContext(), new ArrayList<Exercise>());
 
         setViews();
     }
@@ -79,6 +86,8 @@ public class AddTrainingActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent();
+                setResult(Activity.RESULT_CANCELED);
                 finish();
             }
         });
@@ -107,11 +116,8 @@ public class AddTrainingActivity extends AppCompatActivity {
     }
 
     private void addExercise() {
-        Training training = new Training();
-        training.setDate(new Date());
-        training.setTimeStart(startTimeHours * 3600000 + startTimeMinutes * 60000);
-        training.setTimeEnd(endTimeHours * 3600000 + endTimeMinutes * 60000);
-        training.setDone(isDone);
+        Intent intent = new Intent(getApplicationContext(), AddExerciseTypeActivity.class);
+        startActivityForResult(intent, ADD_EXERCISE_REQUEST);
     }
 
     public void setStartTime(int hours, int minutes) {
@@ -122,5 +128,18 @@ public class AddTrainingActivity extends AppCompatActivity {
     public void setEndTime(int hours, int minutes) {
         endTimeHours = hours;
         endTimeMinutes = minutes;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_EXERCISE_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+                Exercise exercise = Parcels.unwrap(data.getParcelableExtra(IntentExtrasParams.EXERCISE_TYPE_EXTRA));
+                exercises.add(exercise);
+                exercisesAdapter.add(exercise);
+                exercisesAdapter.notifyDataSetChanged();
+            }
+        }
     }
 }
