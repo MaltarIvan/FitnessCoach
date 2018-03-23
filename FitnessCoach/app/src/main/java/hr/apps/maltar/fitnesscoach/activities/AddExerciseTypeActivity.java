@@ -56,7 +56,7 @@ public class AddExerciseTypeActivity extends AppCompatActivity implements Adapte
                 if (category == null || name == "") {
                     return;
                 } else {
-                    int categoryInt = category == "Time" ? 0 : 1;
+                    int categoryInt = category.equals("Time") ? 0 : 1;
                     ExerciseType exerciseType = new ExerciseType(name, categoryInt);
                     Intent intent = new Intent(getApplicationContext(), DataIntentService.class);
                     intent.putExtra(IntentExtrasParams.EXERCISE_TYPE_EXTRA, Parcels.wrap(exerciseType));

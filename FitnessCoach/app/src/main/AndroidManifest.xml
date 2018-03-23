@@ -24,7 +24,8 @@
         <activity android:name=".activities.AddExerciseTypeActivity" />
         <activity android:name=".activities.DayActivity" />
         <activity android:name=".activities.AddTrainingActivity" />
-        <activity android:name=".activities.AddExerciseActivity"></activity>
+        <activity android:name=".activities.AddExerciseActivity" />
+        <activity android:name=".activities.ChooseExerciseTypeActivity"></activity>
     </application>
 
 </manifest>

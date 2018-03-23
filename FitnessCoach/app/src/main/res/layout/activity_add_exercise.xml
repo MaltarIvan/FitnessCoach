@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="hr.apps.maltar.fitnesscoach.activities.AddExerciseActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/add_exercise_type_text"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Choose exercise type: "/>
+
+        <Button
+            android:id="@+id/add_exercise_choose_type_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="choose"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/add_exercise_details_time"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/add_exercise_time_series_edit"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:hint="Number of series:"
+            android:inputType="number"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Time:"/>
+
+            <TextView
+                android:id="@+id/add_exercise_time_text"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/add_exercise_add_time_button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="add time"/>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/add_exercise_time_weight_edit"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:hint="Enter weight (optional): "/>
+
+        <CheckBox
+            android:id="@+id/add_exercise_time_done_check_box"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Is Done"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/add_exercise_details_repetition"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/add_exercise_repetition_series_edit"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:hint="Number of series:"
+            android:inputType="number"/>
+
+        <EditText
+            android:id="@+id/add_exercise_repetitions_edit"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:hint="Number of repetitions: "
+            android:inputType="number"/>
+
+        <EditText
+            android:id="@+id/add_exercise_repetition_weight_edit"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:hint="Enter weight (optional): "/>
+
+        <CheckBox
+            android:id="@+id/add_exercise_repetition_done_check_box"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Is Done"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/add_exercise_done_button"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:text="done"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/add_exercise_cancel_button"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:text="cancel"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"></View>
+</LinearLayout>

@@ -86,7 +86,6 @@ public class AddTrainingActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
                 setResult(Activity.RESULT_CANCELED);
                 finish();
             }
@@ -112,11 +111,11 @@ public class AddTrainingActivity extends AppCompatActivity {
         });
 
         exercisesListView = findViewById(R.id.add_training_exercise_list);
-        exercisesAdapter = new ExercisesAdapter(getApplicationContext(), new ArrayList<Exercise>());
+        exercisesListView.setAdapter(exercisesAdapter);
     }
 
     private void addExercise() {
-        Intent intent = new Intent(getApplicationContext(), AddExerciseTypeActivity.class);
+        Intent intent = new Intent(getApplicationContext(), AddExerciseActivity.class);
         startActivityForResult(intent, ADD_EXERCISE_REQUEST);
     }
 
