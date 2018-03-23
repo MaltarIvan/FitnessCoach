@@ -35,6 +35,20 @@ public class Exercise {
         this.training = training;
     }
 
+    public Exercise(int numberOfSeries, double weight, long time, boolean done) {
+        this.numberOfSeries = numberOfSeries;
+        this.weight = weight;
+        this.time = time;
+        this.done = done;
+    }
+
+    public Exercise(int numberOfSeries, int numberOfRepetitions, double weight, boolean done) {
+        this.numberOfSeries = numberOfSeries;
+        this.numberOfRepetitions = numberOfRepetitions;
+        this.weight = weight;
+        this.done = done;
+    }
+
     public int getId() {
         return id;
     }

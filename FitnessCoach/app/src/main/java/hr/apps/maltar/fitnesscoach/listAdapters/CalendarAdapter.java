@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import hr.apps.maltar.fitnesscoach.R;
+import hr.apps.maltar.fitnesscoach.database.entities.Training;
 import hr.apps.maltar.fitnesscoach.entities.Day;
 
 /**
@@ -66,6 +67,24 @@ public class CalendarAdapter extends BaseAdapter {
 
         dateText.setText(strDate);
 
+        Day day = days.get(position);
+        if (day.getTrainings() != null) {
+            for (int i = 0; i < 2 && i < day.getTrainings().size(); i++) {
+                Training training = day.getTrainings().get(i);
+                if (i == 0) {
+                    TextView textView = calendarGridView.findViewById(R.id.calendar_day_item_1_text);
+                    textView.setText("Id:" + String.valueOf(training.getId()) + " ");
+                    TextView timeTextView = calendarGridView.findViewById(R.id.calendar_day_item_1_time);
+                    timeTextView.setText(String.valueOf(training.getTimeStart()));
+                }
+                if (i == 1) {
+                    TextView textView = calendarGridView.findViewById(R.id.calendar_day_item_2_text);
+                    textView.setText(String.valueOf(training.getId()));
+                    TextView timeTextView = calendarGridView.findViewById(R.id.calendar_day_item_2_time);
+                    timeTextView.setText(String.valueOf(training.getTimeStart()));
+                }
+            }
+        }
         return calendarGridView;
     }
 }

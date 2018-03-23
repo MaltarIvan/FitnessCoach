@@ -10,11 +10,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
 
 import hr.apps.maltar.fitnesscoach.R;
+import hr.apps.maltar.fitnesscoach.database.entities.Exercise;
 import hr.apps.maltar.fitnesscoach.database.entities.ExerciseType;
 import hr.apps.maltar.fitnesscoach.database.entities.ExerciseTypeCategory;
 import hr.apps.maltar.fitnesscoach.params.IntentExtrasParams;
@@ -30,9 +32,9 @@ public class AddExerciseActivity extends AppCompatActivity {
 
     private LinearLayout detailsTimeLayout;
     private EditText timeSeriesEditText;
-    private TextView timeTextView;
-    private Button addTimeButton;
     private EditText timeWeightEditText;
+    private NumberPicker minutesNumberPicker;
+    private NumberPicker secondsNumberPicker;
     private CheckBox timeDoneCheckBox;
 
     private LinearLayout detailsRepetitionLayout;
@@ -89,7 +91,7 @@ public class AddExerciseActivity extends AppCompatActivity {
                     doneButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            // TODO: 23.3.2018. send Exercise back as a result
+                            returnExercise();
                         }
                     });
                     switch (exerciseType.getCategory()) {
@@ -105,20 +107,63 @@ public class AddExerciseActivity extends AppCompatActivity {
         }
     }
 
+    private void returnExercise() {
+        Exercise exercise = new Exercise();
+        if (exerciseType.getCategory() == ExerciseTypeCategory.TIME) {
+            long time = minutesNumberPicker.getValue() * 60 + secondsNumberPicker.getValue();
+            int numberOfSeries = Integer.parseInt(timeSeriesEditText.getText().toString());
+            double weight = 0;
+            try {
+                weight = Double.parseDouble(timeWeightEditText.getText().toString());
+            } catch (NumberFormatException ex) {
+                ex.printStackTrace();
+            }
+            boolean done = timeDoneCheckBox.isChecked();
+            exercise = new Exercise(numberOfSeries, weight, time, done);
+        } else {
+            int numberOfSeries = 0;
+            try {
+                numberOfSeries  = Integer.parseInt(repetitionSeriesEditText.getText().toString());
+            } catch (NumberFormatException ex) {
+                ex.printStackTrace();
+            }
+            int numberOfRepetitions = 0;
+            try {
+                numberOfRepetitions = Integer.parseInt(repetitionsEditText.getText().toString());
+            } catch (NumberFormatException ex) {
+                ex.printStackTrace();
+            }
+            double weight = 0;
+            try {
+                weight = Double.parseDouble(repetitionWeightEditText.getText().toString());
+            } catch (NumberFormatException ex) {
+                ex.printStackTrace();
+            }
+            boolean done = repetitionDoneCheckBox.isChecked();
+            exercise = new Exercise(numberOfSeries, numberOfRepetitions, weight, done);
+        }
+        exercise.setExerciseType(exerciseType);
+        Intent intent = new Intent();
+        intent.putExtra(IntentExtrasParams.EXERCISE_EXTRA, Parcels.wrap(exercise));
+        // intent.putExtra(IntentExtrasParams.EXERCISE_TYPE_EXTRA, Parcels.wrap(exerciseType));
+        setResult(Activity.RESULT_OK, intent);
+        finish();
+    }
+
     private void setTimeLayout() {
         detailsRepetitionLayout.setVisibility(View.GONE);
         detailsTimeLayout.setVisibility(View.VISIBLE);
 
         timeSeriesEditText = findViewById(R.id.add_exercise_time_series_edit);
-        timeTextView = findViewById(R.id.add_exercise_time_text);
-        addTimeButton = findViewById(R.id.add_exercise_add_time_button);
-        addTimeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO: 23.3.2018. pick time
-            }
-        });
         timeWeightEditText = findViewById(R.id.add_exercise_time_weight_edit);
+        minutesNumberPicker = findViewById(R.id.add_exercise_minutes_picker);
+        minutesNumberPicker.setMinValue(0);
+        minutesNumberPicker.setMaxValue(60);
+        //minutesNumberPicker.setWrapSelectorWheel(true);
+        secondsNumberPicker = findViewById(R.id.add_exercise_seconds_picker);
+        secondsNumberPicker.setMinValue(0);
+        secondsNumberPicker.setMaxValue(60);
+        //secondsNumberPicker.setWrapSelectorWheel(true);
         timeDoneCheckBox = findViewById(R.id.add_exercise_time_done_check_box);
     }
 

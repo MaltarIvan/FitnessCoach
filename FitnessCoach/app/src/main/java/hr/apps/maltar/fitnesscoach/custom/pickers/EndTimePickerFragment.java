@@ -31,7 +31,7 @@ public class EndTimePickerFragment extends DialogFragment implements TimePickerD
     @Override
     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
         TextView textView = getActivity().findViewById(R.id.add_training_end_time_text);
-        textView.setText(textView.getText().toString() + hourOfDay + ":" + minute);
+        textView.setText(textView.getText().toString() + String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
         ((AddTrainingActivity) getActivity()).setEndTime(hourOfDay, minute);
     }
 }

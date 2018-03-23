@@ -56,18 +56,18 @@
                 android:layout_weight="1"
                 android:text="Time:"/>
 
-            <TextView
-                android:id="@+id/add_exercise_time_text"
+            <NumberPicker
+                android:id="@+id/add_exercise_minutes_picker"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"></NumberPicker>
 
-            <Button
-                android:id="@+id/add_exercise_add_time_button"
+            <NumberPicker
+                android:id="@+id/add_exercise_seconds_picker"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="add time"/>
+                android:layout_weight="1"></NumberPicker>
+
         </LinearLayout>
 
         <EditText
@@ -75,7 +75,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:hint="Enter weight (optional): "/>
+            android:hint="Enter weight (optional): "
+            android:inputType="numberDecimal"/>
 
         <CheckBox
             android:id="@+id/add_exercise_time_done_check_box"
@@ -115,7 +116,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:hint="Enter weight (optional): "/>
+            android:hint="Enter weight (optional): "
+            android:inputType="numberDecimal"/>
 
         <CheckBox
             android:id="@+id/add_exercise_repetition_done_check_box"

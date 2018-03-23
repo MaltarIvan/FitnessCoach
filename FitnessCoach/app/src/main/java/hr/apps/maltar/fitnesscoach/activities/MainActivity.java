@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
     private BroadcastReceiver broadcastReceiver;
 
+    private ArrayList<Day> daysList;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         intentFilter.addAction(IntentFilterParams.LOAD_ALL_TRAININGS_ACTION);
         intentFilter.addAction(IntentFilterParams.LOAD_ALL_EXERCISE_TYPES_ACTION);
+        intentFilter.addAction(IntentFilterParams.ADD_TRAINING_ACTION);
 
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, intentFilter);
     }
@@ -92,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         startService(intent);
     }
 
-    private void setCalendar(ArrayList<Training> trainings) {
+    private void setCalendar(final ArrayList<Training> trainings) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String firstDate = sharedPreferences.getString(SharedPreferencesParams.FIRST_DATE_PREFERENCE, "");
         if (firstDate == "") {
@@ -102,8 +105,6 @@ public class MainActivity extends AppCompatActivity {
             editor.putString(SharedPreferencesParams.FIRST_DATE_PREFERENCE, firstDate);
             editor.commit();
         } else {
-            // debug
-            // firstDate = "Tue Feb 10 23:24:32 GMT+01:00 2015";
             Toast.makeText(this, firstDate, Toast.LENGTH_SHORT).show();
         }
 
@@ -122,9 +123,7 @@ public class MainActivity extends AppCompatActivity {
         daysDiff = Math.min(Math.max(daysDiff, 1), 365);
         int count = (int) daysDiff + 100;
 
-        // days = 5; // debug
-
-        final ArrayList<Day> daysList = new ArrayList<>();
+        daysList = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(new Date());
@@ -135,9 +134,15 @@ public class MainActivity extends AppCompatActivity {
             for (Training training : trainings) {
                 Calendar trainingCalendar = Calendar.getInstance();
                 trainingCalendar.setTime(training.getDate());
-                if (calendar.get(Calendar.DAY_OF_MONTH) == trainingCalendar.get(Calendar.DAY_OF_MONTH)
-                        && calendar.get(Calendar.MONTH) == trainingCalendar.get(Calendar.MONTH)
-                        && calendar.get(Calendar.YEAR) == trainingCalendar.get(Calendar.YEAR)) {
+                int calendarDay = calendar.get(Calendar.DAY_OF_MONTH);
+                int calendarMonth = calendar.get(Calendar.MONTH);
+                int calendarYear = calendar.get(Calendar.YEAR);
+                int trainingDay = trainingCalendar.get(Calendar.DAY_OF_MONTH);
+                int trainingMonth = trainingCalendar.get(Calendar.MONTH);
+                int trainingYear = trainingCalendar.get(Calendar.YEAR);
+                if (calendarDay == trainingDay
+                        && calendarMonth == trainingMonth
+                        && calendarYear == trainingYear) {
                     day.getTrainings().add(training);
                 }
             }
@@ -152,7 +157,6 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 // Day day = (Day) adapterView.getItemAtPosition(position);
                 Day day = daysList.get(position);
-
                 Intent intent = new Intent(getApplicationContext(), DayActivity.class);
                 intent.putExtra(IntentExtrasParams.DAY_EXTRA, Parcels.wrap(day));
                 startActivity(intent);
@@ -178,6 +182,23 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<Parcelable> parcelables = intent.getParcelableArrayListExtra(IntentExtrasParams.EXERCISE_TYPE_EXTRA);
                 for (Parcelable parcelable : parcelables) {
                     exerciseTypes.add((ExerciseType) Parcels.unwrap(parcelable));
+                }
+            }
+            if (IntentFilterParams.ADD_TRAINING_ACTION.equals(intent.getAction())) {
+                Training training = Parcels.unwrap(intent.getParcelableExtra(IntentExtrasParams.TRAINING_EXTRA));
+                for (Day day : daysList) {
+                    Calendar dayCalendar = Calendar.getInstance();
+                    dayCalendar.setTime(day.getDate());
+
+                    Calendar trainingCalendar = Calendar.getInstance();
+                    trainingCalendar.setTime(training.getDate());
+
+                    if (dayCalendar.get(Calendar.DAY_OF_MONTH) == trainingCalendar.get(Calendar.DAY_OF_MONTH)
+                            && dayCalendar.get(Calendar.MONTH) == trainingCalendar.get(Calendar.MONTH)
+                            && dayCalendar.get(Calendar.YEAR) == trainingCalendar.get(Calendar.YEAR)) {
+                        day.getTrainings().add(training);
+                        ((CalendarAdapter) calendarGridView.getAdapter()).notifyDataSetChanged();
+                    }
                 }
             }
         }

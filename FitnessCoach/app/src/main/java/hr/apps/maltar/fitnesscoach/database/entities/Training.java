@@ -29,6 +29,14 @@ public class Training {
         this.exercises = exercises;
     }
 
+    public Training(int startTime, int endTime, boolean done, Date date, ArrayList<Exercise> exercises) {
+        this.timeStart = startTime;
+        this.timeEnd  = endTime;
+        this.done = done;
+        this.date = date;
+        this.exercises = exercises;
+    }
+
     public int getId() {
         return id;
     }

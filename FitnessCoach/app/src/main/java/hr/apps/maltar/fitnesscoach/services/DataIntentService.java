@@ -100,6 +100,39 @@ public class DataIntentService extends IntentService {
             case IntentFilterParams.LOAD_ALL_TRAININGS_ACTION:
                 loadAllTrainings();
                 break;
+            case IntentFilterParams.ADD_TRAINING_ACTION:
+                addTraining();
+                break;
+        }
+    }
+
+    private void addTraining() {
+        if (receivedTraining == null) {
+            Log.d(LOG_TAG, "Error: no Training send to Data Service Intent");
+        } else {
+            database = dbHelper.getWritableDatabase();
+            for (Exercise exercise : receivedTraining.getExercises()) {
+                ContentValues values = new ContentValues();
+                values.put(FitnessCoachContract.ExerciseEntry.TRAINING_ID, receivedTraining.getId());
+                values.put(FitnessCoachContract.ExerciseEntry.EXERCISE_TYPE_ID, exercise.getExerciseType().getId());
+                values.put(FitnessCoachContract.ExerciseEntry.NUMBER_OF_SERIES, exercise.getNumberOfSeries());
+                values.put(FitnessCoachContract.ExerciseEntry.NUMBER_OF_REPETITIONS, exercise.getNumberOfRepetitions());
+                values.put(FitnessCoachContract.ExerciseEntry.WEIGHT, exercise.getWeight());
+                values.put(FitnessCoachContract.ExerciseEntry.TIME, exercise.getTime());
+                values.put(FitnessCoachContract.ExerciseEntry.DONE, exercise.isDone() ? 1 : 0);
+                values.put(FitnessCoachContract.ExerciseEntry.DATE, exercise.getDate().getTime());
+                exercise.setId((int) database.insert(FitnessCoachContract.ExerciseEntry.TABLE_NAME, null, values));
+            }
+            ContentValues values = new ContentValues();
+            values.put(FitnessCoachContract.TrainingEntry.DATE, receivedTraining.getDate().getTime());
+            values.put(FitnessCoachContract.TrainingEntry.TIME_START, receivedTraining.getTimeStart());
+            values.put(FitnessCoachContract.TrainingEntry.TIME_END, receivedTraining.getTimeEnd());
+            values.put(FitnessCoachContract.TrainingEntry.DONE, receivedTraining.isDone() ? 1 : 0);
+            receivedTraining.setId((int) database.insert(FitnessCoachContract.TrainingEntry.TABLE_NAME, null,values));
+
+            Intent intent = new Intent(IntentFilterParams.ADD_TRAINING_ACTION);
+            intent.putExtra(IntentExtrasParams.TRAINING_EXTRA, Parcels.wrap(receivedTraining));
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
         }
     }
 

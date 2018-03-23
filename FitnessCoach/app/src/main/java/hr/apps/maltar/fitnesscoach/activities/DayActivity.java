@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
-
 import hr.apps.maltar.fitnesscoach.R;
 import hr.apps.maltar.fitnesscoach.database.entities.Training;
 import hr.apps.maltar.fitnesscoach.entities.Day;
@@ -37,11 +35,8 @@ public class DayActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         day = Parcels.unwrap(intent.getParcelableExtra(IntentExtrasParams.DAY_EXTRA));
-        if (day == null) {
 
-        }
-
-        trainingAdapter = new TrainingAdapter(getApplicationContext(), new ArrayList<Training>());
+        trainingAdapter = new TrainingAdapter(getApplicationContext(), day.getTrainings());
 
         setViews();
     }
@@ -55,7 +50,7 @@ public class DayActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), AddTrainingActivity.class);
-                intent.putExtra(IntentExtrasParams.DATE_EXTRA, day.getDate().toString());
+                intent.putExtra(IntentExtrasParams.DATE_EXTRA, day.getDate().getTime());
                 startActivityForResult(intent, ADD_TRAINING_REQUEST);
             }
         });
