@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -61,6 +62,18 @@ public class CalendarAdapter extends BaseAdapter {
         Date date = calendar.getTime();
 
         TextView dateText = calendarGridView.findViewById(R.id.calendar_day_date);
+        ImageView imageView1 = calendarGridView.findViewById(R.id.calendar_day_item_1_icon);
+        imageView1.setImageDrawable(null);
+        TextView textView1 = calendarGridView.findViewById(R.id.calendar_day_item_1_text);
+        textView1.setText("");
+        TextView timeTextView1 = calendarGridView.findViewById(R.id.calendar_day_item_1_time);
+        timeTextView1.setText("");
+        ImageView imageView2 = calendarGridView.findViewById(R.id.calendar_day_item_2_icon);
+        imageView2.setImageDrawable(null);
+        TextView textView2 = calendarGridView.findViewById(R.id.calendar_day_item_2_text);
+        textView2.setText("");
+        TextView timeTextView2 = calendarGridView.findViewById(R.id.calendar_day_item_2_time);
+        timeTextView2.setText("");
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy.");
         String strDate = sdf.format(date);
@@ -72,16 +85,18 @@ public class CalendarAdapter extends BaseAdapter {
             for (int i = 0; i < 2 && i < day.getTrainings().size(); i++) {
                 Training training = day.getTrainings().get(i);
                 if (i == 0) {
-                    TextView textView = calendarGridView.findViewById(R.id.calendar_day_item_1_text);
-                    textView.setText("Id:" + String.valueOf(training.getId()) + " ");
-                    TextView timeTextView = calendarGridView.findViewById(R.id.calendar_day_item_1_time);
-                    timeTextView.setText(String.valueOf(training.getTimeStart()));
+                    if (training.isDone()) {
+                        imageView1.setImageDrawable(context.getDrawable(R.drawable.ic_launcher_foreground));
+                    }
+                    textView1.setText("Id:" + String.valueOf(training.getId()) + " ");
+                    timeTextView1.setText(String.valueOf(training.getTimeStart()));
                 }
                 if (i == 1) {
-                    TextView textView = calendarGridView.findViewById(R.id.calendar_day_item_2_text);
-                    textView.setText(String.valueOf(training.getId()));
-                    TextView timeTextView = calendarGridView.findViewById(R.id.calendar_day_item_2_time);
-                    timeTextView.setText(String.valueOf(training.getTimeStart()));
+                    if (training.isDone()) {
+                        imageView2.setImageDrawable(context.getDrawable(R.drawable.ic_launcher_foreground));
+                    }
+                    textView2.setText("Id:" + String.valueOf(training.getId()) + " ");
+                    timeTextView2.setText(String.valueOf(training.getTimeStart()));
                 }
             }
         }
